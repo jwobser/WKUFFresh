@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WKUFfresh</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_Player">WKUF Streamer</string>
+    <string name="title_Settings">Settings</string>
+    <string name="title_Calendar">Calendar</string>
+    <string name="title_About">About</string>
+    <string name="AboutContent">WKUF-Streamer-Android\n
+================= \n
+\n
+This project is an android application designed to stream the Kettering University Student Radio Station, WKUF, 94.3 FM-LP. \n
+\n
+It was created to fulfill the final project requirement of the Kettering University Course CE-491. \n
+\n
+1. INSTALLATION \n
+The application can be installed by copying the compiled binary (.apk) to the target device. Navigating to the file using a file system browser will allow the application to be installed.
+\n
+The application can also be installed using ADB. Use the adb install command to install the .apk. \n
+\n
+\n
+2. USE \n
+Upon opening the application, the main window is present. This window allows the user to start and stop the stream, as well as mute the audio. Muting the audio from this screen will not adjust the system volume. It will only adjust the volume of the streamer. \n
+\n
+\n
+3. TROUBLESHOOTING INFORMATION \n
+If no stream is playing ensure that: \n
+A.) The device has internet connectivity. \n
+B.) The system media volume is turned up. \n
+\n
+\n
+\n
+COPYRIGHT INFORMATION \n
+\n
+Copyright &#169; 2013 James Wobser; Josh Flynn \n
+\n
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: \n
+\n
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n
+\n
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
+    <string name="service_name">WKUF Streamer Service</string>
+
+</resources>

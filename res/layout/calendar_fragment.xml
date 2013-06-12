@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/calendar_padding_vertical"
+    android:paddingLeft="@dimen/calendar_padding_horizontal"
+    android:paddingRight="@dimen/calendar_padding_horizontal"
+    android:paddingTop="@dimen/calendar_padding_vertical"
+    tools:context=".CalendarFragment$CalendarFragment" >
+
+    <WebView
+        android:id="@+id/CalendarWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+   
+</RelativeLayout>
