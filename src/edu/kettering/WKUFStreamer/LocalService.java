@@ -14,6 +14,7 @@ public class LocalService extends Service {
 	private final IBinder mBinder = new LocalBinder();
 		
 	/* ***** Variables ***** */
+	private static boolean isPrepared = false; // Media Player Prepared?
 	private static boolean isPlaying; // Is media player playing?
 	private static boolean isMuted; // is player muted?
 	private static final String StreamURL = "http://audio.moses.bz:80/wkuf-lp";
@@ -58,8 +59,16 @@ public class LocalService extends Service {
 			e.printStackTrace();
 		}
 		
-		Log.d("AppStatus", "Stream Source has been set to" + StreamURL);
+		Log.d("AppStatus", "Stream Source has been set to: " + StreamURL);
 	
+		mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+			
+			@Override
+			public void onPrepared(MediaPlayer mp) {
+				isPrepared = true;
+			}
+		});
+		
 	Log.d("AppStatus", "Asynchronously Prepare Streamer");
 	try {
 		mp.prepareAsync();
@@ -73,14 +82,16 @@ public class LocalService extends Service {
 		e.printStackTrace();
 	}
 
-
+	
 		return mBinder;
 	}
 		
+		
+	
 	public int playPause() {
 
 		if (isPlaying == true) {
-			mp.pause();
+			mp.stop(); // use stop instead of pause so that stream starts at live location
 			isPlaying = false;
 			return 0; // indicate paused
 		} else {
@@ -93,6 +104,14 @@ public class LocalService extends Service {
 	
 	public int playingStatus(){
 		if(isPlaying == true){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+	
+	public int preparedStatus(){
+		if(isPrepared == true){
 			return 1;
 		}else{
 			return 0;

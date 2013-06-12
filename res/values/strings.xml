@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">WKUFfresh</string>
+    <string name="action_refresh">Refresh Calendar</string>
+    <string name="default_stream">http://audio.moses.bz:80/wkuf-lp</string>
     <string name="action_settings">Settings</string>
     <string name="title_Player">WKUF Streamer</string>
     <string name="title_Settings">Settings</string>

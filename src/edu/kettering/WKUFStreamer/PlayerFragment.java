@@ -32,7 +32,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import edu.kettering.WKUFStreamer.MainActivity;
 import edu.kettering.WKUFStreamer.LocalService;
 import edu.kettering.WKUFStreamer.LocalService.LocalBinder;
-import java.pizza;
 
 public class PlayerFragment extends Fragment {
 	
@@ -44,7 +43,7 @@ public class PlayerFragment extends Fragment {
 	LocalService mService;
 	
 	
-	private NotificationManager mNotificationManager;
+	private NotificationManager mNotificationManager = null;
 
 	//	NotificationCompat.Builder mBuilder;
 	
@@ -126,14 +125,25 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 		 
 	    Intent intent = new Intent(getActivity(), LocalService.class);
 		Log.d("AppStatus", "Binding Service");
-		getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		if(mBound != true){
+			getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		}else{
+			Log.d("AppStatus","Service Already Bound, Skipping Bind");
+		}
 		
-		mNotificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		if(mNotificationManager == null){
+			Log.d("AppStatus","Creating Notification Manager");
+			mNotificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);	
+		}else{
+			Log.d("AppStatus", "Notification Manager Exists, Skipping");
+		}
+		
 		large_notification_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_large);
 		
 		mgr=(AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 		
 		seekVolume.setMax(mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekVolume.setProgress(mgr.getStreamVolume(AudioManager.STREAM_MUSIC));
 		
 		SettingsContentObserver mSettingsContentObserver = new SettingsContentObserver(new Handler());
 		getActivity().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);

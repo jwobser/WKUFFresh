@@ -198,56 +198,6 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-/*
-	public void NotifyPlaying(){
-		Log.d("AppStatus", "Attempting to create Notification");
-	
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-		
-		// Create Notification
-		if(isPlaying == true){
-			
-			if(isMuted == true){
-				Log.d("AppStatus", "Notify (MUTED)");
-				mBuilder
-				.setSmallIcon(R.drawable.icon_small)
-				.setContentTitle("Radio Playing (MUTED)")
-				.setContentText("WKUF 94.3 FM-LP Stream Now Playing")
-				.setLargeIcon(large_notification_icon)
-				.setOngoing(true);
-			}
-			else{
-				Log.d("AppStatus", "Notify (UNMUTED)");
-				mBuilder
-				.setSmallIcon(R.drawable.icon_small)
-				.setContentTitle("Radio Playing")
-				.setContentText("WKUF 94.3 FM-LP Stream Now Playing")
-				.setLargeIcon(large_notification_icon)
-				.setOngoing(true);	
-			}
-						
-			
-			Intent resultIntent = new Intent(this, MainActivity.class);
-			resultIntent.addFlags(67108864);
-			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-			stackBuilder.addParentStack(MainActivity.class);
-			stackBuilder.addNextIntent(resultIntent);
-			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-			mBuilder.setContentIntent(resultPendingIntent);
-			
-			mNotificationManager.notify(123, mBuilder.build());
-			isNotifying = true;
-			
-		}
-		else{
-			mNotificationManager.cancel(123);
-			isNotifying = false;
-		}
-	}	
-*/	
-
-	
-	
 }
 	
 
