@@ -42,18 +42,11 @@ public class PlayerFragment extends Fragment {
 	LocalBinder binder;
 	LocalService mService;
 	
-	
-	private NotificationManager mNotificationManager = null;
-
-	//	NotificationCompat.Builder mBuilder;
-	
 	/* ***** Player Status ***** */
 	private boolean mBound;
 	private int isPlaying; // 1 - Playing 0 - Not Playing
 	
-	/* ***** Images ***** */
-	Bitmap large_notification_icon;
-	
+		
 	/* ***** Audio Manager ***** */
 	private AudioManager mgr = null;
 
@@ -93,13 +86,15 @@ public class PlayerFragment extends Fragment {
 		public void onChange(boolean selfChange){
 			super.onChange(selfChange);
 			setVolumeSeek();
-			int isMuted = mService.muteStatus();
-			switch(isMuted){
-			case 0:
-				break;
-			case 1:
-				mService.toggleMute();
-				break;
+			if(mBound == true){
+				int isMuted = mService.muteStatus();
+				switch(isMuted){
+					case 0:
+						break;
+					case 1:
+						mService.toggleMute();
+						break;
+				}
 			}
 			
 		}
@@ -131,16 +126,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 		}else{
 			Log.d("AppStatus","Service Already Bound, Skipping Bind");
 		}
-		
-		if(mNotificationManager == null){
-			Log.d("AppStatus","Creating Notification Manager");
-			mNotificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);	
-		}else{
-			Log.d("AppStatus", "Notification Manager Exists, Skipping");
-		}
-		
-		large_notification_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_large);
-		
+				
 		mgr=(AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 		
 		seekVolume.setMax(mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
@@ -154,57 +140,6 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 	}
 
 
-public void NotifyPlaying(){
-	Log.d("AppStatus", "Attempting to create Notification");
-	
-	/* ***** Notification ***** */
-	NotificationCompat.Builder mBuilder;
-	mBuilder = new NotificationCompat.Builder(getActivity());
-	
-	// Create Notification
-	int playingStatus = mService.playingStatus();  // 1- playing, 0 - not playing 
-	int muteStatus = mService.muteStatus();  // 1 - muted, 0 - unmuted
-	
-	if(playingStatus == 1){
-		
-		switch(muteStatus){
-		case 1:
-			Log.d("AppStatus", "Notify (MUTED)");
-			mBuilder
-			.setSmallIcon(R.drawable.icon_small)
-			.setContentTitle("Radio Playing (MUTED)")
-			.setContentText("WKUF 94.3 FM-LP Stream Now Playing")
-			.setLargeIcon(large_notification_icon)
-			.setOngoing(true);
-			break;
-		case 0:
-			Log.d("AppStatus", "Notify (UNMUTED)");
-			mBuilder
-			.setSmallIcon(R.drawable.icon_small)
-			.setContentTitle("Radio Playing")
-			.setContentText("WKUF 94.3 FM-LP Stream Now Playing")
-			.setLargeIcon(large_notification_icon)
-			.setOngoing(true);
-			break;
-		}
-		
-		Intent resultIntent = new Intent(getActivity(), MainActivity.class);
-		resultIntent.addFlags(67108864);
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
-		stackBuilder.addParentStack(MainActivity.class);
-		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
-		
-		mNotificationManager.notify(123, mBuilder.build());
-//		isNotifying = true;
-		
-	}
-	else{
-		mNotificationManager.cancel(123);
-//		isNotifying = false;
-	}
-}
 
 /* ***** Listeners ***** */
 //Toggle Pause
@@ -229,8 +164,7 @@ public void NotifyPlaying(){
 					btnTogglePlay.setImageResource(R.drawable.ic_play_btn);
 					break;
 				}
-				 NotifyPlaying();
-				
+				 				
 				}
 		};
 		
@@ -239,8 +173,7 @@ public void NotifyPlaying(){
 			@Override
 			public void onClick(View view) {
 			mService.toggleMute();
-			 NotifyPlaying();
-			}
+			 }
 		};
 
 		
@@ -258,11 +191,7 @@ public void NotifyPlaying(){
 				
 				Toast toast = Toast.makeText(context, text, duration);
 				toast.show();
-				
-				// If service returns playing state, toggle notification!!
-				 NotifyPlaying();
-				
-			
+						
 			}
 		};
 			
@@ -293,5 +222,5 @@ public void NotifyPlaying(){
 			
 		};
 	
-	
+		
 }

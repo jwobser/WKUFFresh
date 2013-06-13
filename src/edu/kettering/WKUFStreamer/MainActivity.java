@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity {
 	ConnectivityManager conMgr;
 	
 	/* ***** Notification Manager ***** */
-//	private NotificationManager mNotificationManager;
+	private NotificationManager mNotificationManager = null;
 	
 	/* ***** Player Status ***** */
 	private boolean isMuted;
@@ -59,16 +59,13 @@ public class MainActivity extends FragmentActivity {
 	/* ***** Tabbed Layout Objects ***** */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
-	PlayerFragment fragment1;
+//	PlayerFragment fragment1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// setContentView(R.layout.webview_test);
-		
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
+
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
@@ -77,9 +74,13 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		NetworkCheck();
-		
-//		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		large_notification_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_large);
+
+		if(mNotificationManager == null){
+			Log.d("AppStatus","Creating Notification Manager");
+			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);	
+		}else{
+			Log.d("AppStatus", "Notification Manager Exists, Skipping");
+		}
 		
 	}
 	
@@ -151,10 +152,11 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	@Override
-	public void onStop(){
-		super.onStop();
-		
+	public void onDestroy(){
+		mNotificationManager.cancel(123);
+		super.onDestroy();
 	}
+
 	
 	private ServiceConnection mConnection = new ServiceConnection(){
 	
