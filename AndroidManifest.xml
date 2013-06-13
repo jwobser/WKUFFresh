@@ -13,13 +13,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
         <service
             android:name="edu.kettering.WKUFStreamer.LocalService"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/icon_launcher"
             android:label="@string/service_name">
         </service>
                 
