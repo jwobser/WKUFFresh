@@ -54,6 +54,11 @@ public class MainActivity extends FragmentActivity {
 	Intent service;
 	
 	@Override
+	public void onNewIntent(Intent intent){
+		super.onNewIntent(intent);
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);

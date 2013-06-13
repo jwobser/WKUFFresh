@@ -216,12 +216,14 @@ public class LocalService extends Service {
 			}
 			
 			Intent resultIntent = new Intent(this, MainActivity.class);
-			resultIntent.addFlags(67108864);
+			resultIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-			stackBuilder.addParentStack(MainActivity.class);
-			stackBuilder.addNextIntent(resultIntent);
-			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//			stackBuilder.addParentStack(MainActivity.class);
+			stackBuilder.addNextIntentWithParentStack(resultIntent);
+//			stackBuilder.addNextIntent(resultIntent);
+			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
 			mBuilder.setContentIntent(resultPendingIntent);
+			
 			
 			mNotificationManager.notify(123, mBuilder.build());
 //			isNotifying = true;
