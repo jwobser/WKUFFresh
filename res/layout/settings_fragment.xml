@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <Switch
-        android:id="@+id/switch_unplug_mute"
+        android:id="@+id/switch_headphones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -27,15 +27,26 @@
 		android:paddingTop="@dimen/settings_vertical_margin"
         android:paddingBottom="@dimen/settings_vertical_margin" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stream Source:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:gravity="right|center_vertical" >
+	     <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Use Alternate Stream Source"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
 
+	     <CheckBox
+	         android:id="@+id/chk_alternate_source"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content" />
+	     
+	</LinearLayout>
+	     
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/txt_streamsource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -47,25 +58,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btn_submit_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:text="Load Default" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_weight="0"
             android:gravity="center"
             android:text="Submit" />
 
     </LinearLayout>
+
+   
    
 </LinearLayout>

@@ -3,15 +3,12 @@ package edu.kettering.WKUFStreamer;
 import java.util.Locale;
 
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -19,8 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +26,6 @@ import edu.kettering.WKUFStreamer.AboutFragment;
 import edu.kettering.WKUFStreamer.SettingsFragment;
 import edu.kettering.WKUFStreamer.CalendarFragment;
 import edu.kettering.WKUFStreamer.PlayerFragment;
-import android.support.v4.app.DialogFragment;
 
 
 public class MainActivity extends FragmentActivity {
@@ -41,9 +35,9 @@ public class MainActivity extends FragmentActivity {
 	ConnectivityManager conMgr;
 	
 	/* ***** Player Status ***** */
-	private boolean isMuted;
-	private boolean isNotifying;
-	private boolean isPlaying;
+//	private boolean isMuted;
+//	private boolean isNotifying;
+//	private boolean isPlaying;
 	
 	/* ***** Media Player Service ***** */
 	LocalService mService;

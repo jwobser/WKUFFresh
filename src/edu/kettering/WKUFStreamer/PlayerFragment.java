@@ -1,18 +1,11 @@
 package edu.kettering.WKUFStreamer;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.ContentObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,14 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import edu.kettering.WKUFStreamer.MainActivity;
 import edu.kettering.WKUFStreamer.LocalService;
 import edu.kettering.WKUFStreamer.LocalService.LocalBinder;
 
@@ -44,7 +34,7 @@ public class PlayerFragment extends Fragment {
 	
 	/* ***** Player Status ***** */
 	private boolean mBound;
-	private int isMuted; // 1 - Muted  0-Not Muted
+//	private int isMuted; // 1 - Muted  0-Not Muted
 	private int isPlaying; // 1 - Playing 0 - Not Playing
 	
 		
