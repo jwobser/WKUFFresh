@@ -48,15 +48,9 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_pause_btn" />
+        android:src="@drawable/ic_play_btn" />
 
-    <ToggleButton
-        android:id="@+id/btnToggleStream"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/app_name" />
-  
+      
     </LinearLayout>
 
 </LinearLayout>

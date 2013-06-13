@@ -44,6 +44,7 @@ public class PlayerFragment extends Fragment {
 	
 	/* ***** Player Status ***** */
 	private boolean mBound;
+	private int isMuted; // 1 - Muted  0-Not Muted
 	private int isPlaying; // 1 - Playing 0 - Not Playing
 	
 		
@@ -109,8 +110,6 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 		
 		View root = inflater.inflate(R.layout.player_fragment, container, false);
 	
-		 btnStreamToggle = (ToggleButton) root.findViewById(R.id.btnToggleStream);
-		 btnStreamToggle.setOnCheckedChangeListener(mOnCheckedChangeListener);
 		 btnToggleMute = (ImageButton) root.findViewById(R.id.btnToggleMute);
 		 btnToggleMute.setOnClickListener(muteClickListener);
 		 seekVolume = (SeekBar) root.findViewById(R.id.seekVolume);
@@ -173,28 +172,19 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 			@Override
 			public void onClick(View view) {
 			mService.toggleMute();
+			int isMuted = mService.muteStatus();
+			switch(isMuted){
+			case 1:
+				btnToggleMute.setImageResource(R.drawable.ic_muted);
+				break;
+			case 0:
+				btnToggleMute.setImageResource(R.drawable.ic_mute);
+				break;
+			}
 			 }
 		};
 
-		
-		// For toggling play state
-		private OnCheckedChangeListener mOnCheckedChangeListener = new OnCheckedChangeListener(){
-
-			@Override
-			public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
-			
-				int maxVolume = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-				// Test for returing max stream volume
-				Context context = getActivity().getApplicationContext();
-				String text = new String("Max Volume: ").concat(String.valueOf(maxVolume));
-				int duration = Toast.LENGTH_LONG;
-				
-				Toast toast = Toast.makeText(context, text, duration);
-				toast.show();
 						
-			}
-		};
-			
 		// For changing volume
 		private OnSeekBarChangeListener volumeChangeListener = new OnSeekBarChangeListener(){
 

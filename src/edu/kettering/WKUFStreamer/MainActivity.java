@@ -40,9 +40,6 @@ public class MainActivity extends FragmentActivity {
 	/* ***** Connectivity Manager ***** */
 	ConnectivityManager conMgr;
 	
-	/* ***** Notification Manager ***** */
-	private NotificationManager mNotificationManager = null;
-	
 	/* ***** Player Status ***** */
 	private boolean isMuted;
 	private boolean isNotifying;
@@ -59,7 +56,6 @@ public class MainActivity extends FragmentActivity {
 	/* ***** Tabbed Layout Objects ***** */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
-//	PlayerFragment fragment1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +68,6 @@ public class MainActivity extends FragmentActivity {
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		
-		NetworkCheck();
-
-		if(mNotificationManager == null){
-			Log.d("AppStatus","Creating Notification Manager");
-			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);	
-		}else{
-			Log.d("AppStatus", "Notification Manager Exists, Skipping");
-		}
 		
 	}
 	
@@ -142,8 +129,7 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onStart(){
 		super.onStart();
-		NetworkCheck();
-	}
+		}
 	
 	@Override
 	public void onResume(){
@@ -151,13 +137,7 @@ public class MainActivity extends FragmentActivity {
 		NetworkCheck();
 	}
 	
-	@Override
-	public void onDestroy(){
-		mNotificationManager.cancel(123);
-		super.onDestroy();
-	}
-
-	
+		
 	private ServiceConnection mConnection = new ServiceConnection(){
 	
 		

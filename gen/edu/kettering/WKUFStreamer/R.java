@@ -26,18 +26,18 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int ic_mute=0x7f020001;
-        public static final int ic_pause_btn=0x7f020002;
-        public static final int ic_play_btn=0x7f020003;
-        public static final int icon_large=0x7f020004;
-        public static final int icon_large_bmp=0x7f020005;
-        public static final int icon_launcher=0x7f020006;
-        public static final int icon_small=0x7f020007;
-        public static final int wkuf_logo=0x7f020008;
+        public static final int ic_muted=0x7f020002;
+        public static final int ic_pause_btn=0x7f020003;
+        public static final int ic_play_btn=0x7f020004;
+        public static final int icon_large=0x7f020005;
+        public static final int icon_large_bmp=0x7f020006;
+        public static final int icon_launcher=0x7f020007;
+        public static final int icon_small=0x7f020008;
+        public static final int wkuf_logo=0x7f020009;
     }
     public static final class id {
         public static final int AboutText=0x7f080000;
         public static final int CalendarWebView=0x7f080003;
-        public static final int action_settings=0x7f080013;
         public static final int btnToggleMute=0x7f080006;
         public static final int btnTogglePlay=0x7f08000b;
         public static final int btnToggleStream=0x7f080004;
