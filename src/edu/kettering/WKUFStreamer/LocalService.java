@@ -69,24 +69,27 @@ public class LocalService extends Service {
 			}
 		});
 		
-	Log.d("AppStatus", "Asynchronously Prepare Streamer");
-	try {
-		mp.prepareAsync();
-	} catch (IllegalArgumentException e) {
-		e.printStackTrace();
-	} catch (SecurityException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IllegalStateException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-
-	
+		prepareMediaPlayer();
+		
 		return mBinder;
 	}
 		
 		
+	private void prepareMediaPlayer(){
+		Log.d("AppStatus", "Asynchronously Prepare Streamer");
+		try {
+			mp.prepareAsync();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public int playPause() {
 
@@ -104,7 +107,9 @@ public class LocalService extends Service {
 			}
 		
 		} else {
+			prepareMediaPlayer();
 			return -1;
+			
 		}
 
 	}

@@ -41,20 +41,17 @@ public class MainActivity extends FragmentActivity {
 	ConnectivityManager conMgr;
 	
 	/* ***** Notification Manager ***** */
-	private NotificationManager mNotificationManager;
+//	private NotificationManager mNotificationManager;
 	
 	/* ***** Player Status ***** */
 	private boolean isMuted;
 	private boolean isNotifying;
 	private boolean isPlaying;
 	
-	/* ***** Intents ***** */
-	private Intent webtestintent;
-	private Intent testintent;
-	
 	/* ***** Media Player Service ***** */
 	LocalService mService;
 	boolean mBound = false;
+	boolean mStarted = false;
 	
 	/* ***** Images ***** */
 	Bitmap large_notification_icon;
@@ -72,63 +69,68 @@ public class MainActivity extends FragmentActivity {
 		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
+		NetworkCheck();
+		
+//		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		large_notification_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_large);
+		
+	}
+	
+	
+	// Check for network and 
+	private void NetworkCheck(){
 		conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 		
 		if (conMgr.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||  conMgr.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING  ) {
 			Log.d("AppStatus","Network is Connected OR Connecting");
 		Intent service = new Intent(this, LocalService.class);
 		this.startService(service);
-
-		
-		
+		bindServiceIfNeeded();
 		}
 		else if ( conMgr.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||  conMgr.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
 		    //notify user you are not online
 			Log.d("AppStatus", "Network not Connected!");
-//			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//			builder.setMessage("Warning, No Internet Connectivity")
-//					.setPositiveButton("Ignore", new DialogInterface.OnClickListener() {
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							// TODO Auto-generated method stub
-//						}
-//					})
-//					.setNegativeButton("Go to Network Settings", new DialogInterface.OnClickListener() {
-//						
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							// TODO Auto-generated method stub
-//							
-//						}
-//					});
-//			builder.create().show();
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Warning, No Internet Connectivity")
+					.setPositiveButton("Ignore", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+						}
+					})
+					.setNegativeButton("Go to Network Settings", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+							
+						}
+					});
+		AlertDialog mDialog = builder.create();
+		mDialog.show();
 				
 		}
-		
-//		webtestintent = new Intent(MainActivity.this, webtestclass.class);
-//		testintent = new Intent(MainActivity.this, TestActivity.class);
-
-		
-		
-
-		
-
-		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		large_notification_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_large);
-		
-		
-		
 	}
 	
-	
+	public void bindServiceIfNeeded(){
+		Intent intent = new Intent(this, LocalService.class);
+		
+		if(mBound == false){
+			Log.d("AppStatus", "Binding Service");
+			bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+			mBound = true;
+		} else {
+			// Already Bound, do nothing.
+		}
+	}
 	
 	public void onButtonClick(View v) {
         if (mBound) {
@@ -139,43 +141,13 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onStart(){
 		super.onStart();
-		Intent intent = new Intent(this, LocalService.class);
-		Log.d("AppStatus", "Binding Service");
-		if(mBound == false){
-			bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-		} else {
-			
-		}
+		NetworkCheck();
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
-		
-		if (conMgr.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||  conMgr.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING  ) {
-
-			Intent service = new Intent(this, LocalService.class);
-			this.startService(service);
-
-			}
-			else if ( conMgr.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||  conMgr.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
-			    //notify user you are not online
-
-			}
-		
-		if (mBound){
-			unbindService(mConnection);
-			mBound = false;
-			
-		}
-		Intent intent = new Intent(this, LocalService.class);
-		Log.d("AppStatus", "Binding Service");
-		if(mBound == false){
-			bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-		} else {
-			// If already bound, do nothing.
-		}
-		
+		NetworkCheck();
 	}
 	
 	@Override
