@@ -90,14 +90,21 @@ public class LocalService extends Service {
 	
 	public int playPause() {
 
-		if (isPlaying == true) {
-			mp.stop(); // use stop instead of pause so that stream starts at live location
-			isPlaying = false;
-			return 0; // indicate paused
+		if(isPrepared == true){
+
+			if (mp.isPlaying() == true) {
+	//			mp.stop(); // use stop instead of pause so that stream starts at live location
+				mp.pause();
+				isPlaying = false;
+				return 0; // indicate paused
+			} else {
+				mp.start();
+				isPlaying = true;
+				return 1; // indicate playing
+			}
+		
 		} else {
-			mp.start();
-			isPlaying = true;
-			return 1; // indicate playing
+			return -1;
 		}
 
 	}

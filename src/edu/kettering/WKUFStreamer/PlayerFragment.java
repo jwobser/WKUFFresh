@@ -49,6 +49,7 @@ public class PlayerFragment extends Fragment {
 	
 	/* ***** Player Status ***** */
 	private boolean mBound;
+	private int isPlaying; // 1 - Playing 0 - Not Playing
 	
 	/* ***** Images ***** */
 	Bitmap large_notification_icon;
@@ -211,7 +212,23 @@ public void NotifyPlaying(){
 			@Override
 			public void onClick(View view){
 				Log.d("AppStatus","Toggle Play State");
-				mService.playPause();
+				isPlaying = mService.playPause();
+				switch(isPlaying){
+				case -1:
+					Context context = getActivity().getApplicationContext();
+					String text = "Not Ready. Please Wait.";
+					int duration = Toast.LENGTH_LONG;
+					
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+					break;
+				case 1:
+					btnTogglePlay.setImageResource(R.drawable.ic_pause_btn);
+					break;
+				case 0:
+					btnTogglePlay.setImageResource(R.drawable.ic_play_btn);
+					break;
+				}
 				 NotifyPlaying();
 				
 				}
