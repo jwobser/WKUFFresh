@@ -35,7 +35,7 @@ public class PlayerFragment extends Fragment {
 	/* ***** Player Status ***** */
 	private boolean mBound;
 //	private int isMuted; // 1 - Muted  0-Not Muted
-	private int isPlaying; // 1 - Playing 0 - Not Playing
+	private int isPlaying; // 1 - Playing 0 - Not Playing -1 - Not Prepared
 	
 		
 	/* ***** Audio Manager ***** */
@@ -99,15 +99,21 @@ public class PlayerFragment extends Fragment {
 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
 		View root = inflater.inflate(R.layout.player_fragment, container, false);
-	
-		 btnToggleMute = (ImageButton) root.findViewById(R.id.btnToggleMute);
-		 btnToggleMute.setOnClickListener(muteClickListener);
-		 seekVolume = (SeekBar) root.findViewById(R.id.seekVolume);
-		 seekVolume.setOnSeekBarChangeListener(volumeChangeListener);
-		 btnTogglePlay = (ImageButton) root.findViewById(R.id.btnTogglePlay);
-		 btnTogglePlay.setOnClickListener(playClickListener);
+
+		mgr=(AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+		
+		btnToggleMute = (ImageButton) root.findViewById(R.id.btnToggleMute);
+		btnToggleMute.setOnClickListener(muteClickListener);
+			 
+		seekVolume = (SeekBar) root.findViewById(R.id.seekVolume);
+		seekVolume.setProgress(mgr.getStreamVolume(AudioManager.STREAM_MUSIC));
+		seekVolume.setMax(mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekVolume.setOnSeekBarChangeListener(volumeChangeListener);
+			 
+		btnTogglePlay = (ImageButton) root.findViewById(R.id.btnTogglePlay);
+		btnTogglePlay.setOnClickListener(playClickListener);
 		 
-		 
+ 
 	    Intent intent = new Intent(getActivity(), LocalService.class);
 		Log.d("AppStatus", "Binding Service");
 		if(mBound != true){
@@ -116,10 +122,10 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 			Log.d("AppStatus","Service Already Bound, Skipping Bind");
 		}
 				
-		mgr=(AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+	
 		
-		seekVolume.setMax(mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		seekVolume.setProgress(mgr.getStreamVolume(AudioManager.STREAM_MUSIC));
+		
+		
 		
 		SettingsContentObserver mSettingsContentObserver = new SettingsContentObserver(new Handler());
 		getActivity().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);
@@ -136,7 +142,8 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sa
 			@Override
 			public void onClick(View view){
 				Log.d("AppStatus","Toggle Play State");
-				isPlaying = mService.playPause();
+				mService.playPause();
+				isPlaying = mService.playingStatus();
 				switch(isPlaying){
 				case -1:
 					Context context = getActivity().getApplicationContext();

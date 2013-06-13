@@ -23,7 +23,7 @@ public class LocalService extends Service {
 		
 	/* ***** Variables ***** */
 	private static boolean isPrepared = false; // Media Player Prepared?
-	private static boolean isPlaying; // Is media player playing?
+	private static boolean isPlaying = false; // Is media player playing?
 	private static boolean isMuted; // is player muted?
 	private static final String StreamURL = "http://audio.moses.bz:80/wkuf-lp";
 
@@ -55,7 +55,7 @@ public class LocalService extends Service {
 		mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 		large_notification_icon = BitmapFactory.decodeResource(getResources(), R.drawable.icon_large);
 		
-		isPlaying = false;
+//		isPlaying = false;
 		mp = new MediaPlayer();
 		mp.setVolume(1, 1); // Set volume to max scale by default. Will
 							// need to adjust using system volume.
@@ -135,10 +135,16 @@ public class LocalService extends Service {
 	}
 	
 	public int playingStatus(){
-		if(isPlaying == true){
-			return 1;
-		}else{
-			return 0;
+		if(isPrepared == true){
+
+			if (mp.isPlaying() == true) {
+				return 1; // indicate playing
+			} else {
+				return 0; // indicate paused
+			}
+		} else {
+			return -1; // Not Prepared
+			
 		}
 	}
 	
@@ -230,7 +236,17 @@ public class LocalService extends Service {
 	@Override
 	public void onDestroy(){
 		mNotificationManager.cancel(123);
+		mp.stop();
+		mp.release();
+		isPrepared = false;
 		super.onDestroy();
 	}
 
+	public void stopPlay(){
+		mp.stop();
+		mp.release();
+		isPrepared = false;
+		mNotificationManager.cancel(123);
+	}
+	
 }

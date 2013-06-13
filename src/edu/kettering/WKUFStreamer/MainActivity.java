@@ -51,6 +51,8 @@ public class MainActivity extends FragmentActivity {
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
 
+	Intent service;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,8 +74,7 @@ public class MainActivity extends FragmentActivity {
 		
 		if (conMgr.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||  conMgr.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING  ) {
 			Log.d("AppStatus","Network is Connected OR Connecting");
-		Intent service = new Intent(this, LocalService.class);
-		this.startService(service);
+		service = new Intent(this, LocalService.class);
 		bindServiceIfNeeded();
 		}
 		else if ( conMgr.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||  conMgr.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
@@ -114,12 +115,6 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 	
-	public void onButtonClick(View v) {
-        if (mBound) {
-        	mService.playPause();
-        }
-    }
-	
 	@Override
 	protected void onStart(){
 		super.onStart();
@@ -131,7 +126,7 @@ public class MainActivity extends FragmentActivity {
 		NetworkCheck();
 	}
 	
-		
+			
 	private ServiceConnection mConnection = new ServiceConnection(){
 	
 		
@@ -145,7 +140,7 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			mBound = false;
-			
+						
 		}
 	
 	};
@@ -216,7 +211,9 @@ public class MainActivity extends FragmentActivity {
 			return null;
 		}
 	}
-
-}
+	
+	
+	
+	}
 	
 
